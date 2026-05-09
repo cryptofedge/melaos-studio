@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+sessions/
+memory/users.json
+memory/songs.json
+memory/errors.json
+memory/fedge-response.json
+memory/fedge-commands.json
+memory/context/
+memory/agent-status.json
+logs/
+*.log
+.DS_Store
