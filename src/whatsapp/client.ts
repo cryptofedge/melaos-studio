@@ -4,6 +4,7 @@ import makeWASocket, {
   fetchLatestBaileysVersion,
 } from '@whiskeysockets/baileys'
 import { Boom } from '@hapi/boom'
+import qrcode from 'qrcode-terminal'
 import { MessageHandler } from './message-handler'
 import { MemoryStore } from '../core/memory'
 import { AgentBus } from '../core/agent-bus'
@@ -26,7 +27,7 @@ export async function startWhatsApp({ memory, bus }: WAOptions) {
   const sock = makeWASocket({
     version,
     auth: state,
-    printQRInTerminal: true,
+    printQRInTerminal: false,
     logger: logger as any,
   })
 
@@ -38,7 +39,9 @@ export async function startWhatsApp({ memory, bus }: WAOptions) {
     const { connection, lastDisconnect, qr } = update
 
     if (qr) {
-      logger.info('📱 Scan QR code above to connect WhatsApp')
+      console.log('\n\n📱 Scan this QR code with WhatsApp:\n')
+      qrcode.generate(qr, { small: true })
+      console.log('\n')
     }
 
     if (connection === 'close') {
@@ -49,7 +52,7 @@ export async function startWhatsApp({ memory, bus }: WAOptions) {
     }
 
     if (connection === 'open') {
-      logger.info('✅ WhatsApp connected — Melao\'s Studio is live')
+      logger.info("✅ WhatsApp connected — Melao's Studio is live")
       bus.emit('WA_CONNECTED')
     }
   })
