@@ -1,0 +1,37 @@
+{
+  "name": "melaos-studio",
+  "version": "1.0.0",
+  "description": "Melao's Studio — FEDGE 2.O music sub-agent. WhatsApp → Suno AI song generation.",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.7.9",
+    "playwright": "^1.44.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "fedge",
+    "melaos-studio",
+    "suno",
+    "whatsapp",
+    "ai-music",
+    "agent"
+  ],
+  "author": "FEDGE 2.O — @cryptofedge",
+  "license": "MIT"
+}
