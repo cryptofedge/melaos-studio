@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, Browsers } = require("baileys");
 const qrcode = require("qrcode-terminal");
 const fs = require("fs");
@@ -13,12 +14,17 @@ const FEDGE_SOUL = `You are FEDGE 2.O, an AI agent built to generate generationa
 
 // ── Music intent detection ────────────────────────────────────────────────────
 function isMusicRequest(text) {
-  const t = text.toLowerCase().trim()
-  const triggers = melaosStudio.manifest.triggers
-  if (t.toUpperCase().startsWith('LINK ')) return true
-  if (t.toUpperCase() === 'UNLINK') return true
-  if (t.toUpperCase() === 'SONGS') return true
-  return triggers.some(trigger => t.includes(trigger.toLowerCase()))
+  const t = text.toLowerCase().trim();
+  if (t.toUpperCase().startsWith('LINK ')) return true;
+  if (t.toUpperCase() === 'UNLINK') return true;
+  if (t.toUpperCase() === 'SONGS') return true;
+  const triggers = [
+    'make me a song', 'create a song', 'make a beat', 'make a track',
+    'hazme una cancion', 'create music', 'generate a song', 'write me a song',
+    'make me a trap', 'make me a reggaeton', 'make me a hip hop',
+    'suno', 'melao studio', 'song about', 'song like', 'beat about'
+  ];
+  return triggers.some(trigger => t.includes(trigger.toLowerCase()));
 }
 
 async function generateVoice(text) {
@@ -29,22 +35,31 @@ async function generateVoice(text) {
 }
 
 async function askFEDGE(userMessage) {
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": ANTHROPIC_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 200,
-      system: FEDGE_SOUL,
-      messages: [{ role: "user", content: userMessage }]
-    })
-  });
-  const data = await response.json();
-  return data.content[0].text;
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 200,
+        system: FEDGE_SOUL,
+        messages: [{ role: "user", content: userMessage }]
+      })
+    });
+    const data = await response.json();
+    if (!data.content || !data.content[0]) {
+      console.log("API error:", JSON.stringify(data));
+      return "FEDGE 2.O is processing... try again in a moment.";
+    }
+    return data.content[0].text;
+  } catch (err) {
+    console.log("askFEDGE error:", err.message);
+    return "FEDGE 2.O hit a snag. Try again!";
+  }
 }
 
 async function startBot() {
@@ -80,7 +95,7 @@ async function startBot() {
     try {
       // ── Route to Melao's Studio if music intent detected ──
       if (isMusicRequest(text)) {
-        console.log(`[Melao's Studio] Handling music request from ${from}`);
+        console.log(`[Melao's Studio] 🎵 Handling music request from ${from}`);
         const reply = async (replyText) => {
           await sock.sendMessage(from, { text: replyText });
         };
@@ -94,7 +109,7 @@ async function startBot() {
       await sock.sendMessage(from, { text: reply });
 
     } catch (err) {
-      console.log("Error:", err.message);
+      console.log("Handler error:", err.message);
       await sock.sendMessage(from, { text: `❌ Error: ${err.message}` });
     }
   });
