@@ -139,3 +139,26 @@ NEXT_SCHEDULED_SYNC: on_startup
 ```
 [2026-05-09] Agent initialized. Waiting for first WhatsApp connection.
 ```
+
+---
+
+## Songwriter Style Database
+
+Melao's Studio has a full style database loaded at `agent/STYLES.md`.
+
+**Covered artists:** 70+ songwriters across all major genres.
+
+**Categories:**
+- 🇺🇸 American: Rock, Folk, R&B, Soul, Hip-Hop, Pop, Country
+- 🌎 Latin Legends: Bolero, Bossa Nova, Tango, Ranchera, Salsa
+- 🌎 Latin Modern: Reggaeton, Latin Trap, Bachata, Merengue, Vallenato, Urban
+
+**Usage:** When user references a songwriter or artist style, Melao's Studio
+maps it to the Suno style tag from STYLES.md and builds the prompt accordingly.
+
+**Examples loaded into prompt engine:**
+- "Like Bad Bunny" → `Latin trap, reggaeton, emotional, experimental, modern`
+- "Carole King vibes" → `soft rock, piano, intimate, emotional, 70s pop`
+- "Daddy Yankee energy" → `reggaeton, dembow, street, Puerto Rico, anthem`
+- "Juan Gabriel romantic" → `ranchera, romantic pop, Mexican, emotional, iconic`
+- "Beyoncé powerful" → `pop R&B, feminist, powerhouse vocals, cinematic, modern`
