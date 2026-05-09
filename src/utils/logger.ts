@@ -16,11 +16,13 @@ function write(level: string, ...args: any[]) {
   fs.appendFileSync(LOG_FILE, line + '\n')
 }
 
-export const logger = {
+export const logger: any = {
   info:  (...args: any[]) => write('INFO ', ...args),
   warn:  (...args: any[]) => write('WARN ', ...args),
   error: (...args: any[]) => write('ERROR', ...args),
   debug: (...args: any[]) => write('DEBUG', ...args),
+  trace: (...args: any[]) => write('TRACE', ...args),
+  fatal: (...args: any[]) => write('FATAL', ...args),
   child: () => logger,
   level: 'info',
 }
