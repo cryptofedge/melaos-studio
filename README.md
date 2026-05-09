@@ -157,3 +157,23 @@ Mission: Generational wealth through AI, crypto & financial education.
 ---
 
 *Melao's Studio — a FEDGE 2.O sub-agent.*
+
+---
+
+## License & Brand
+
+**FEDGE 2.O** | Powered by Rafael Fellito Rodriguez / Milciades Holguin and Eclat Universe  
+© 2026 FEDGE 2.O. All rights reserved.
+
+This project is part of the FEDGE 2.O ecosystem and is protected under full intellectual property rights reserved by Rafael Fellito Rodriguez and Eclat Universe.
+
+| | |
+|---|---|
+| **Type** | Proprietary — All Rights Reserved |
+| **Owner** | Rafael Fellito Rodriguez and Eclat Universe |
+| **Brand** | FEDGE 2.O |
+| **Status** | Protected and Confidential |
+
+For licensing, partnerships, or usage permissions:  
+📧 [cryptofedge@gmail.com](mailto:cryptofedge@gmail.com)  
+📄 [Full License](https://github.com/cryptofedge/FEDGE-2.O/blob/main/LICENSE)
